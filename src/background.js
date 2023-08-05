@@ -5,7 +5,30 @@
 // For more information on background script,
 // See https://developer.chrome.com/extensions/background_pages
 
-var chapterCount = 0;
+// *When windows & tabs open
+browser.windows.onCreated.addListener((window) => {
+    console.log(`New window: ${window.id}`);
+});
+
+browser.tabs.onCreated.addListener((tab) => {
+    console.log(`New tab: ${tab.id}`);
+});
+
+// *When windows & tabs close
+browser.windows.onClose.addListener((window) => {
+    console.log(`Closed window: ${window.id}`);
+});
+
+browser.tabs.onClose.addListener((tab) => {
+    console.log(`Closed tab: ${tab.id}`);
+});
+
+// *When tab is changed
+browser.tabs.onActivated.addListener((tab) => {
+    console.log(`Changed tab to ${tab.id}`);
+});
+
+// console.log(`New window: ${window.id}`);
 
 // chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 //     if (request.type === 'SET') {

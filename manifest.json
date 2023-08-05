@@ -16,8 +16,14 @@
     },
     "permissions": [
         "<all_urls>",
-        "tabs"
+        "tabs",
+        "windows"
     ],
+    "background": {
+        "scripts": [
+            "src/background.js"
+        ]
+    },
     "homepage_url": "https://github.com/DonNinja/Browser-Sounds",
     "content_scripts": [
         {
