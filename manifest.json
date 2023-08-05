@@ -11,14 +11,13 @@
     },
     "browser_specific_settings": {
         "gecko": {
-            "id": "YCP@DonNinja.com"
+            "id": "BS@DonNinja.com"
         }
     },
     "content_scripts": [
         {
             "matches": [
-                "https://www.youtube.com/watch?v=*",
-                "https://www.youtube.com/*"
+                "*"
             ],
             "js": [
                 "src/jquery-3.7.0.min.js",
