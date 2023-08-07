@@ -1,3 +1,4 @@
+// import data from '../data/sounds';
 // 'use strict';
 
 // With background scripts you can communicate with popup
@@ -5,53 +6,47 @@
 // For more information on background script,
 // See https://developer.chrome.com/extensions/background_pages
 
-// *When windows & tabs open
-browser.windows.onCreated.addListener((window) => {
-    console.log(`New window: ${window.id}`);
-});
+createOpen();
+createClosed();
+createActivated();
 
-browser.tabs.onCreated.addListener((tab) => {
-    console.log(`New tab: ${tab.id}`);
-});
+function createOpen() {
+    // *When windows & tabs open
+    browser.windows.onCreated.addListener((window) => {
+        console.log(`New window: ${window.id}`);
+    });
 
-// *When windows & tabs close
-browser.windows.onClose.addListener((window) => {
-    console.log(`Closed window: ${window.id}`);
-});
+    browser.tabs.onCreated.addListener((tab) => {
+        console.log(`New tab: ${tab.id}`);
+    });
+}
 
-browser.tabs.onClose.addListener((tab) => {
-    console.log(`Closed tab: ${tab.id}`);
-});
+function createClosed() {
+    // *When windows & tabs close
+    browser.windows.onRemoved.addListener((window) => {
+        console.log(`Closed window: ${window.id}`);
+    });
 
-// *When tab is changed
-browser.tabs.onActivated.addListener((tab) => {
-    console.log(`Changed tab to ${tab.id}`);
-});
+    browser.tabs.onRemoved.addListener((tab) => {
+        console.log(`Closed tab: ${tab.id}`);
+    });
+}
 
-// console.log(`New window: ${window.id}`);
+function createActivated() {
+    let audio = document.createElement('audio');
 
-// chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-//     if (request.type === 'SET') {
-//         const message = `Set chapter count to ${request.payload.message}`;
-//         chapterCount = request.payload.message;
+    let source = document.createElement('source');
 
-//         // Log message coming from the `request` parameter
-//         console.log(`Background received setter: ${request.payload.message}`);
+    if (audio.canPlayType('audio/wav')) {
+        source.type = 'audio/wav';
+        source.src = '../data/sounds/test.wav';
+    }
+    audio.volume = 0.5;
 
-//         // Send a response message
-//         sendResponse({
-//             message,
-//         });
-//     }
+    audio.appendChild(source);
 
-//     else if (request.type === 'GET') {
-//         const message = chapterCount;
-
-//         console.log(`Background received request to getter`);
-
-//         // Send a response message
-//         sendResponse({
-//             message,
-//         });
-//     }
-// });
+    // *When tab is changed
+    browser.tabs.onActivated.addListener(() => {
+        audio.cloneNode(true).play();
+    });
+}
