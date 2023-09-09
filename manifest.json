@@ -27,7 +27,7 @@
     "browser_action": {
         "default_popup": "src/popup.html"
     },
-    "options_ui": {
+    "popup": {
         "page": "src/popup.html"
     },
     "homepage_url": "https://github.com/DonNinja/Browser-Sounds",

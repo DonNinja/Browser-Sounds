@@ -57,12 +57,12 @@ function createActivated() {
 
     // *When tab is changed
     // browser.tabs.onActivated.addListener(() => {
-        // audio.cloneNode(true).play();
+    // audio.cloneNode(true).play();
     // });
 }
 
 function createKeydown() {
-    
+
 }
 
 function getAudio(filename) {
@@ -93,29 +93,18 @@ function handleMessage(request, sender, sendResponse) {
 
     switch (request.message) {
         case "GET":
+            sendResponse({
+                response: `GET`,
+                currentVolumes: volumes
+            });
             break;
 
-        case "SETTRUE":
-            if (request.key != -1) {
-                console.log(`TRYING TO SET ${request.key} down`);
-                keysDown[request.key] = true;
-            } else if (request.moved) {
-                console.log(`SET MOVED BACK TO TRUE`);
-                movedBack = true;
-            } else {
-                console.log(`2nd REQUEST NOT FOUND`);
-            }
+        case "SET":
+            let newVolumes = request.newVolumes;
             break;
 
-        case "SETFALSE":
-            if (request.key != -1) {
-                keysDown[request.key] = false;
-            } else if (request.moved) {
-                console.log(`SET MOVED BACK TO FALSE`);
-                movedBack = false;
-            } else {
-                console.log(`2nd REQUEST NOT FOUND`);
-            }
+        case "TEST":
+            console.log("THIS IS A TEST");
             break;
 
         default:
@@ -123,9 +112,9 @@ function handleMessage(request, sender, sendResponse) {
             sendResponse({ error: "Background does not know about this request." });
             break;
     }
-    data = [JSON.parse(JSON.stringify(keysDown)), movedBack];
+    // data = [JSON.parse(JSON.stringify(keysDown)), movedBack];
 
-    sendResponse({ response: data });
+    sendResponse({ response: "lamao" });
 }
 
 browser.runtime.onMessage.addListener(handleMessage);

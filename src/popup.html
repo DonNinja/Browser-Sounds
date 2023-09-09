@@ -8,23 +8,21 @@
 </head>
 
 <body>
-    <div class="app">
-        <p>I don't know what you're doing here</p>
+    <div id="popupContent">
+
+        <form>
+            <p>Tab open: <input type="range" class="AudioSlider" id="open"></p>
+            <p>Tab close: <input type="range" class="AudioSlider" id="close"></p>
+            <!-- Tab open: <input type="range" id=""> -->
+
+            <p id="test">NONE</p>
+
+            <button>Save</button>
+            <button type="reset">Reset</button>
+        </form>
+
+        <script src="popup.js"></script>
     </div>
-    <form>
-        <p>Tab open: <input type="range" class="AudioSlider" id="open"></p>
-        <p>Tab close: <input type="range" class="AudioSlider" id="close"></p>
-        <!-- Tab open: <input type="range" id=""> -->
-    </form>
-
-    <script src="popup.js"></script>
-
-    <!--
-      This HTML file opens when you click on icon from the toolbar.
-
-      To begin the development, run `npm run watch`.
-      To create a production bundle, use `npm run build`.
-    -->
 </body>
 
 </html>
