@@ -6,6 +6,9 @@
 // For more information on background script,
 // See https://developer.chrome.com/extensions/background_pages
 
+import options from "../data/options.json"
+
+
 console.clear();
 console.log(`STARTUP`);
 
@@ -14,21 +17,15 @@ createClosed();
 // createActivated();
 
 let volumes = {
-    'open': 0.5,
-    'close': 0.5
+    'open': options.open,
+    'close': options.close
 };
 
 function createOpen() {
     let audio = getAudio('open');
 
-    // *When windows & tabs open
-    browser.windows.onCreated.addListener((window) => {
-        // console.log(`New window: ${window.id}`);
-        // audio.cloneNode(true).play();
-    });
-
     browser.tabs.onCreated.addListener((tab) => {
-        console.log(`New tab: ${tab.id}`);
+        // console.log(`New tab: ${tab.id}`);
         let temp = audio.cloneNode(true);
         temp.volume = volumes.open;
         temp.play();

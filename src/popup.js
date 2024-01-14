@@ -1,4 +1,6 @@
 let defaultVolumes = {
+    'open': .5,
+    'close': .5
 };
 
 function initialise() {
@@ -19,7 +21,7 @@ function listenForClicks() {
          * Just log the error to the console.
          */
         function reportError(error) {
-            console.error(`Could not beastify: ${error}`);
+            console.error(`Perform: ${error}`);
         }
 
         /**
@@ -38,9 +40,6 @@ function listenForClicks() {
             document.getElementById("test").textContent = "TEST";
         } else {
             // browser.tabs
-            //     .query({ active: true, currentWindow: true })
-            //     .then(beastify)
-            document.getElementById("test").textContent = "TEST";
             //     .catch(reportError);
         }
     });
@@ -74,5 +73,7 @@ function reportExecuteScriptError(error) {
  */
 // browser.tabs.listenForClicks
 //     .catch(reportExecuteScriptError);
+
+initialise();
 
 listenForClicks();
