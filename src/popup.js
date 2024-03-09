@@ -63,10 +63,10 @@ function handleResponse(message) {
         // console.log(`Received volumes: ${defaultVolumes.open}, ${defaultVolumes.close}`);
 
         openSlider.value = defaultVolumes.open;
-        openValue.innerHTML = defaultVolumes.open;
+        openValue.textContent = defaultVolumes.open;
 
         closeSlider.value = defaultVolumes.close;
-        closeValue.innerHTML = defaultVolumes.close;
+        closeValue.textContent = defaultVolumes.close;
     } else if (message.response === "SUCCESS") {
         console.log(`Successful submit :)`);
     }
@@ -95,11 +95,11 @@ function reportExecuteScriptError(error) {
 listenForClicks();
 
 openSlider.addEventListener("input", (e) => {
-    openValue.innerHTML = openSlider.value;
+    openValue.textContent = openSlider.value;
 });
 
 closeSlider.addEventListener("input", (e) => {
-    closeValue.innerHTML = closeSlider.value;
+    closeValue.textContent = closeSlider.value;
 });
 
 resetVolume();
