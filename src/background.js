@@ -1,4 +1,3 @@
-// import data from '../data/sounds';
 // 'use strict';
 
 // With background scripts you can communicate with popup
@@ -6,28 +5,46 @@
 // For more information on background script,
 // See https://developer.chrome.com/extensions/background_pages
 
-import options from "../data/options.json"
-
 
 console.clear();
-console.log(`STARTUP`);
+// console.log(`STARTUP`);
 
 createOpen();
 createClosed();
-// createActivated();
 
+// Set a default 50% volume
 let volumes = {
-    'open': options.open,
-    'close': options.close
+    'open': 0,
+    'close': 0
 };
+
+async function setVolumes(newVolumes) {
+    // console.log(`Couldn't find volumes, so setting defaults`)
+    volumes = await browser.storage.sync.set({
+        volumes: newVolumes
+    });
+    // volumes = {
+    //     'open': 50 / 100,
+    //     'close': 50 / 100
+    // }
+}
+
+async function getVolumes() {
+    volumes = (await browser.storage.sync.get("volumes"))['volumes'];
+    // console.log(volumes);
+}
+
+setVolumes({ open: 50, close: 50 });
+getVolumes();
+
+// console.log(volumes);
 
 function createOpen() {
     let audio = getAudio('open');
 
     browser.tabs.onCreated.addListener((tab) => {
-        // console.log(`New tab: ${tab.id}`);
         let temp = audio.cloneNode(true);
-        temp.volume = volumes.open;
+        temp.volume = volumes.open / 100;
         temp.play();
     });
 }
@@ -44,7 +61,7 @@ function createClosed() {
     browser.tabs.onRemoved.addListener((tab) => {
         console.log(`Closed tab`);
         let temp = audio.cloneNode(true);
-        temp.volume = volumes.close;
+        temp.volume = volumes.close / 100;
         temp.play();
     });
 }
@@ -67,10 +84,6 @@ function getAudio(filename) {
 
     let source = document.createElement('source');
 
-    // if (audio.canPlayType('audio/wav')) {
-    //     source.type = 'audio/wav';
-    //     source.src = `../data/sounds/${filename}.wav`;
-    // }
     if (audio.canPlayType('audio/mp3')) {
         source.type = 'audio/mp3';
         source.src = `../data/sounds/${filename}.mp3`;
@@ -98,6 +111,7 @@ function handleMessage(request, sender, sendResponse) {
 
         case "SET":
             let newVolumes = request.newVolumes;
+            setVolumes(newVolumes);
             break;
 
         case "TEST":

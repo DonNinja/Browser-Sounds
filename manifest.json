@@ -17,7 +17,8 @@
     "permissions": [
         "<all_urls>",
         "tabs",
-        "activeTab"
+        "activeTab",
+        "storage"
     ],
     "background": {
         "scripts": [

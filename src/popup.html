@@ -9,10 +9,9 @@
 
 <body>
     <div id="popupContent">
-
         <form>
-            <p>Tab open: <input type="range" class="AudioSlider" id="open"></p>
-            <p>Tab close: <input type="range" class="AudioSlider" id="close"></p>
+            <p>Tab open: <input id="OpenSlider" type="range" min="0" max="100" class="AudioSlider" id="open" /> <b id="OpenValue">50</b> </p>
+            <p>Tab close: <input id="CloseSlider" type="range"  min="0" max="100" class="AudioSlider" id="close" /> <b id="CloseValue">50</b> </p>
             <!-- Tab open: <input type="range" id=""> -->
 
             <!-- <p id="test">NONE</p> -->
@@ -20,8 +19,6 @@
             <button type="save">Save</button>
             <button type="reset">Reset</button>
         </form>
-
-        <p id="test"></p>
 
         <script src="popup.js"></script>
     </div>
