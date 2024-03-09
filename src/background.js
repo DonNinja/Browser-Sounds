@@ -5,6 +5,13 @@
 // For more information on background script,
 // See https://developer.chrome.com/extensions/background_pages
 
+function setItem() {
+    console.log("OK");
+}
+
+function onError(error) {
+    console.log(error);
+}
 
 console.clear();
 // console.log(`STARTUP`);
@@ -20,13 +27,9 @@ let volumes = {
 
 async function setVolumes(newVolumes) {
     // console.log(`Couldn't find volumes, so setting defaults`)
-    volumes = await browser.storage.sync.set({
+    await browser.storage.sync.set({
         volumes: newVolumes
-    });
-    // volumes = {
-    //     'open': 50 / 100,
-    //     'close': 50 / 100
-    // }
+    }).then(getVolumes, onError);
 }
 
 async function getVolumes() {
@@ -35,7 +38,6 @@ async function getVolumes() {
 }
 
 setVolumes({ open: 50, close: 50 });
-getVolumes();
 
 // console.log(volumes);
 
@@ -109,13 +111,12 @@ function handleMessage(request, sender, sendResponse) {
             });
             break;
 
-        case "SET":
+        case "SAVE":
             let newVolumes = request.newVolumes;
             setVolumes(newVolumes);
-            break;
-
-        case "TEST":
-            console.log("THIS IS A TEST");
+            sendResponse({
+                response: `SUCCESS`
+            })
             break;
 
         default:

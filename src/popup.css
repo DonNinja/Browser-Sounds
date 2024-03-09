@@ -5,8 +5,19 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 /* normalize css ends here */
 
 body {
-    padding: 2em;
+  padding: 2rem;
+  width: 22rem;
+  margin: 0 auto;
+}
+
+.value {
+  padding: .5rem;
+}
+
+.buttons {
+  margin: 0 auto;
 }

@@ -1,6 +1,4 @@
 let defaultVolumes = {
-    open: 0.5,
-    close: 0.5,
 };
 
 const openSlider = document.getElementById("OpenSlider");
@@ -30,34 +28,47 @@ function listenForClicks() {
         }
 
         if (e.target.type === "reset") {
-            const sending = browser.runtime.sendMessage({
-                message: "GET",
-            });
-            sending.then(handleResponse, handleError);
-        } else if (e.target.type === "save") {
+            console.log("Sending reset to background");
+            resetVolume();
+        }
+        if (e.target.type === "submit") {
+            let newOpen = openSlider.value;
+            let newClose = closeSlider.value;
+
+            console.log(`Sending new values to background`);
             const sending = browser.runtime.sendMessage({
                 message: "SAVE",
+                newVolumes: { open: newOpen, close: newClose }
             });
+
             sending.then(handleResponse, handleError);
-        } else {
-            // browser.tabs
-            //     .catch(reportError);
+
+            openSlider.value = newOpen;
+            closeSlider.value = newClose;
         }
     });
 }
 
+function resetVolume() {
+    const sending = browser.runtime.sendMessage({
+        message: "GET",
+    });
+    sending.then(handleResponse, handleError);
+}
+
 function handleResponse(message) {
     console.log(`Message from the background script: ${message.response}`);
-    if (message.response == "GET") {
+    if (message.response === "GET") {
         defaultVolumes = message.currentVolumes;
-
-        console.log(defaultVolumes);
+        // console.log(`Received volumes: ${defaultVolumes.open}, ${defaultVolumes.close}`);
 
         openSlider.value = defaultVolumes.open;
         openValue.innerHTML = defaultVolumes.open;
 
         closeSlider.value = defaultVolumes.close;
         closeValue.innerHTML = defaultVolumes.close;
+    } else if (message.response === "SUCCESS") {
+        console.log(`Successful submit :)`);
     }
 }
 
@@ -90,3 +101,5 @@ openSlider.addEventListener("input", (e) => {
 closeSlider.addEventListener("input", (e) => {
     closeValue.innerHTML = closeSlider.value;
 });
+
+resetVolume();
