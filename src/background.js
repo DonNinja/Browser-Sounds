@@ -20,13 +20,12 @@ createOpen();
 createClosed();
 
 // Set a default 50% volume
-let volumes = {
-    'open': 0,
-    'close': 0
-};
+// let volumes = {
+//     'open': 50,
+//     'close': 50
+// };
 
 async function setVolumes(newVolumes) {
-    // console.log(`Couldn't find volumes, so setting defaults`)
     await browser.storage.sync.set({
         volumes: newVolumes
     }).then(getVolumes, onError);
@@ -34,10 +33,11 @@ async function setVolumes(newVolumes) {
 
 async function getVolumes() {
     volumes = (await browser.storage.sync.get("volumes"))['volumes'];
-    // console.log(volumes);
+
+    console.log(`New volumes: ${volumes.open} | ${volumes.close}`);
 }
 
-setVolumes({ open: 50, close: 50 });
+getVolumes();
 
 // console.log(volumes);
 
@@ -124,9 +124,6 @@ function handleMessage(request, sender, sendResponse) {
             sendResponse({ error: "Background does not know about this request." });
             break;
     }
-    // data = [JSON.parse(JSON.stringify(keysDown)), movedBack];
-
-    sendResponse({ response: "lamao" });
 }
 
 browser.runtime.onMessage.addListener(handleMessage);

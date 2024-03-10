@@ -1,4 +1,6 @@
 let defaultVolumes = {
+    'open': 0,
+    'close': 0
 };
 
 const openSlider = document.getElementById("OpenSlider");
