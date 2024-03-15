@@ -19,11 +19,7 @@ console.clear();
 createOpen();
 createClosed();
 
-// Set a default 50% volume
-// let volumes = {
-//     'open': 50,
-//     'close': 50
-// };
+let volumes;
 
 async function setVolumes(newVolumes) {
     await browser.storage.sync.set({
@@ -34,10 +30,19 @@ async function setVolumes(newVolumes) {
 async function getVolumes() {
     volumes = (await browser.storage.sync.get("volumes"))['volumes'];
 
-    console.log(`New volumes: ${volumes.open} | ${volumes.close}`);
+    // console.log(`New volumes: ${volumes.open} | ${volumes.close}`);
 }
 
-getVolumes();
+getVolumes().then(() => {
+    return;
+}, () => {
+    if (volumes === undefined) {
+        setVolumes({
+            "open": 50,
+            "close": 50
+        })
+    }
+});
 
 // console.log(volumes);
 
