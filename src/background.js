@@ -22,32 +22,37 @@ createClosed();
 let volumes;
 
 async function setVolumes(newVolumes) {
-    await browser.storage.sync.set({
-        volumes: newVolumes
-    }).then(getVolumes, onError);
+    await browser.storage.sync
+        .set({
+            volumes: newVolumes,
+        })
+        .then(getVolumes, onError);
 }
 
 async function getVolumes() {
-    volumes = (await browser.storage.sync.get("volumes"))['volumes'];
+    volumes = (await browser.storage.sync.get("volumes"))["volumes"];
 
     // console.log(`New volumes: ${volumes.open} | ${volumes.close}`);
 }
 
-getVolumes().then(() => {
-    return;
-}, () => {
-    if (volumes === undefined) {
-        setVolumes({
-            "open": 50,
-            "close": 50
-        })
+getVolumes().then(
+    () => {
+        return;
+    },
+    () => {
+        if (volumes === undefined) {
+            setVolumes({
+                open: 50,
+                close: 50,
+            });
+        }
     }
-});
+);
 
 // console.log(volumes);
 
 function createOpen() {
-    let audio = getAudio('open');
+    let audio = getAudio("open");
 
     browser.tabs.onCreated.addListener((tab) => {
         let temp = audio.cloneNode(true);
@@ -57,7 +62,7 @@ function createOpen() {
 }
 
 function createClosed() {
-    let audio = getAudio('close');
+    let audio = getAudio("close");
 
     // *When windows & tabs close
     browser.windows.onRemoved.addListener((window) => {
@@ -75,24 +80,21 @@ function createClosed() {
 
 function createActivated() {
     // let audio = getAudio('change');
-
     // *When tab is changed
     // browser.tabs.onActivated.addListener(() => {
     // audio.cloneNode(true).play();
     // });
 }
 
-function createKeydown() {
-
-}
+function createKeydown() {}
 
 function getAudio(filename) {
-    let audio = document.createElement('audio');
+    let audio = document.createElement("audio");
 
-    let source = document.createElement('source');
+    let source = document.createElement("source");
 
-    if (audio.canPlayType('audio/mp3')) {
-        source.type = 'audio/mp3';
+    if (audio.canPlayType("audio/mp3")) {
+        source.type = "audio/mp3";
         source.src = `../data/sounds/${filename}.mp3`;
     }
     audio.volume = 1;
@@ -106,13 +108,12 @@ function handleMessage(request, sender, sendResponse) {
     console.log(`A content script sent a message: ${request.message}`);
 
     console.log(request);
-    let data = [];
 
     switch (request.message) {
         case "GET":
             sendResponse({
                 response: `GET`,
-                currentVolumes: volumes
+                currentVolumes: volumes,
             });
             break;
 
@@ -120,13 +121,15 @@ function handleMessage(request, sender, sendResponse) {
             let newVolumes = request.newVolumes;
             setVolumes(newVolumes);
             sendResponse({
-                response: `SUCCESS`
-            })
+                response: `SUCCESS`,
+            });
             break;
 
         default:
             console.log();
-            sendResponse({ error: "Background does not know about this request." });
+            sendResponse({
+                error: "Background does not know about this request.",
+            });
             break;
     }
 }

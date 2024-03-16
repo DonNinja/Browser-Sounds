@@ -1,28 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>My Chrome Extension</title>
+        <link rel="stylesheet" href="popup.css" />
+    </head>
 
-<head>
-    <meta charset="UTF-8" />
-    <title>My Chrome Extension</title>
-    <link rel="stylesheet" href="popup.css" />
-</head>
+    <body>
+        <div id="popupContent">
+            <form id="volumeForm">
+                <p>Tab open: <input id="OpenSlider" type="range" min="0" max="100" class="AudioSlider" id="open" /> <b class="value" id="OpenValue">50</b></p>
+                <p>Tab close: <input id="CloseSlider" type="range" min="0" max="100" class="AudioSlider" id="close" /> <b class="value" id="CloseValue">50</b></p>
 
-<body>
-    <div id="popupContent">
-        <form>
-            <p>Tab open: <input id="OpenSlider" type="range" min="0" max="100" class="AudioSlider" id="open" /> <b
-                    class="value" id="OpenValue">50</b> </p>
-            <p>Tab close: <input id="CloseSlider" type="range" min="0" max="100" class="AudioSlider" id="close" /> <b
-                    class="value" id="CloseValue">50</b> </p>
+                <div class="buttons">
+                    <button type="submit">Save</button>
+                    <button type="reset">Reset</button>
+                </div>
+            </form>
 
-            <div class="buttons">
-                <button type="submit">Save</button>
-                <button type="reset">Reset</button>
-            </div>
-        </form>
-
-        <script src="popup.js"></script>
-    </div>
-</body>
-
+            <script src="popup.js"></script>
+        </div>
+    </body>
 </html>

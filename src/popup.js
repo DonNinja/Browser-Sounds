@@ -1,13 +1,13 @@
 let defaultVolumes = {
-    'open': 0,
-    'close': 0
+    open: 0,
+    close: 0,
 };
 
 const openSlider = document.getElementById("OpenSlider");
 const closeSlider = document.getElementById("CloseSlider");
 const openValue = document.getElementById("OpenValue");
 const closeValue = document.getElementById("CloseValue");
-
+const volumeForm = document.getElementById("volumeForm");
 
 function listenForClicks() {
     document.addEventListener("click", (e) => {
@@ -15,7 +15,7 @@ function listenForClicks() {
          * Remove the page-hiding CSS from the active tab,
          * send a "reset" message to the content script in the active tab.
          */
-        function reset(tabs) { }
+        function reset(tabs) {}
 
         /**
          * Just log the error to the console.
@@ -26,27 +26,12 @@ function listenForClicks() {
 
         if (e.target.tagName !== "BUTTON" || !e.target.closest("#popupContent")) {
             // Ignore when click is not on a button within <div id="popupContent">.
-            return;
+            // return;
         }
 
         if (e.target.type === "reset") {
-            console.log("Sending reset to background");
-            resetVolume();
         }
         if (e.target.type === "submit") {
-            let newOpen = openSlider.value;
-            let newClose = closeSlider.value;
-
-            console.log(`Sending new values to background`);
-            const sending = browser.runtime.sendMessage({
-                message: "SAVE",
-                newVolumes: { open: newOpen, close: newClose }
-            });
-
-            sending.then(handleResponse, handleError);
-
-            openSlider.value = newOpen;
-            closeSlider.value = newClose;
         }
     });
 }
@@ -102,6 +87,30 @@ openSlider.addEventListener("input", (e) => {
 
 closeSlider.addEventListener("input", (e) => {
     closeValue.textContent = closeSlider.value;
+});
+
+volumeForm.addEventListener("reset", (event) => {
+    event.preventDefault();
+    console.log("Sending reset to background");
+    resetVolume();
+
+    return true;
+});
+
+volumeForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    let newOpen = openSlider.value;
+    let newClose = closeSlider.value;
+
+    console.log(`Sending new values to background`);
+    const sending = browser.runtime.sendMessage({
+        message: "SAVE",
+        newVolumes: { open: newOpen, close: newClose },
+    });
+
+    sending.then(resetVolume, handleError);
+
+    return true;
 });
 
 resetVolume();
