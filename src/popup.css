@@ -1,25 +1,75 @@
 *,
 *::before,
 *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 /* normalize css ends here */
 
 body {
-  padding: 2rem;
-  width: 24rem;
-  margin: 0 auto;
+    padding: 2rem;
+    width: 24rem;
+    margin: 0 auto;
 }
 
 .value {
-  padding: .5rem;
-  width: 5rem;
-  text-align: center;
+    padding: 0.5rem;
+    width: 3rem;
+    text-align: center;
+    font-weight: bold;
 }
 
 .buttons {
-  margin: 0 auto;
+    margin: 1rem auto 0;
+}
+
+.sliderDiv {
+    display: flex;
+    align-items: center;
+}
+
+.audioSlider {
+    -webkit-appearance: none;
+    width: 60%;
+    height: 25px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
+    flex: 3;
+    /* padding-top: 2rem; */
+    margin: 0 .5rem;
+    border-radius: 5px;
+}
+
+.audioSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px;
+    height: 100%;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+.audioSlider::-moz-range-thumb {
+    width: 10px;
+    height: 100%;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+/* Hide buttons for the number inputs */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

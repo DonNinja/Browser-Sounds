@@ -9,16 +9,17 @@
     <body>
         <div id="popupContent">
             <form id="volumeForm">
-                <p>
-                    Tab open:
-                    <input id="OpenSlider" type="range" min="0" max="100" class="AudioSlider" id="open" />
-                    <b> <input id="openInput" class="value" type="number" min="0" max="100" value="50" /> </b>
+                <div class="sliderDiv">
+                    <label>Tab open:</label>
+                    <input id="OpenSlider" type="range" min="0" max="100" class="audioSlider" id="open" />
+                    <input id="openInput" class="value" type="number" min="0" max="100" value="50" />
                     <!-- <b class="value" id="OpenValue">50</b> -->
-                </p>
-                <p>
-                    Tab close: <input id="CloseSlider" type="range" min="0" max="100" class="AudioSlider" id="close" />
-                    <b> <input id="closeInput" class="value" type="number" min="0" max="100" value="50" /> </b>
-                </p>
+                </div>
+                <div class="sliderDiv">
+                    <label>Tab close:</label>
+                    <input id="CloseSlider" type="range" min="0" max="100" class="audioSlider" id="close" />
+                    <input id="closeInput" class="value" type="number" min="0" max="100" value="50" />
+                </div>
 
                 <div class="buttons">
                     <button type="submit">Save</button>
