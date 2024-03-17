@@ -3,10 +3,8 @@ let defaultVolumes = {
     close: 0,
 };
 
-const openSlider = document.getElementById("OpenSlider");
-const closeSlider = document.getElementById("CloseSlider");
-// const openValue = document.getElementById("OpenValue");
-// const closeValue = document.getElementById("CloseValue");
+const openSlider = document.getElementById("openSlider");
+const closeSlider = document.getElementById("closeSlider");
 const openInput = document.getElementById("openInput");
 const closeInput = document.getElementById("closeInput");
 const volumeForm = document.getElementById("volumeForm");
@@ -22,15 +20,13 @@ function handleResponse(message) {
     console.log(`Message from the background script: ${message.response}`);
     if (message.response === "GET") {
         defaultVolumes = message.currentVolumes;
-        // console.log(`Received volumes: ${defaultVolumes.open}, ${defaultVolumes.close}`);
 
         openSlider.value = defaultVolumes.open;
         openInput.value = defaultVolumes.open;
-        // openValue.textContent = defaultVolumes.open;
 
         closeSlider.value = defaultVolumes.close;
         closeInput.value = defaultVolumes.close;
-        // closeValue.textContent = defaultVolumes.close;
+
     } else if (message.response === "SUCCESS") {
         console.log(`Successful submit :)`);
     }
@@ -50,13 +46,12 @@ function reportExecuteScriptError(error) {
     console.error(`Failed to execute beastify content script: ${error.message}`);
 }
 
+// Keep the sliders and inputs in sync
 openSlider.addEventListener("input", (e) => {
     openInput.value = openSlider.value;
-    // openValue.textContent = openSlider.value;
 });
 
 closeSlider.addEventListener("input", (e) => {
-    // closeValue.textContent = closeSlider.value;
     closeInput.value = closeSlider.value;
 });
 
@@ -91,7 +86,7 @@ volumeForm.addEventListener("submit", (event) => {
         newVolumes: { open: newOpen, close: newClose },
     });
 
-    sending.then(resetVolume, handleError);
+    sending.then(handleResponse, handleError);
 });
 
 resetVolume();

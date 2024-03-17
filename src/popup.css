@@ -19,15 +19,17 @@ body {
     width: 3rem;
     text-align: center;
     font-weight: bold;
+    height: 1.75rem;
 }
 
-.buttons {
-    margin: 1rem auto 0;
-}
+/* .buttons {
+    
+} */
 
 .sliderDiv {
     display: flex;
     align-items: center;
+    margin-bottom: .5rem;
 }
 
 .audioSlider {
