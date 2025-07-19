@@ -1,5 +1,5 @@
 "esversion: 11";
-// import YTChapters from "get-youtube-chapters";
+
 
 // Content script file will run in the context of web page.
 // With content script you can manipulate the web pages using
@@ -11,6 +11,7 @@
 
 // For more information on Content Scripts,
 // See https://developer.chrome.com/extensions/content_scripts
+
 
 let styles = `
 
